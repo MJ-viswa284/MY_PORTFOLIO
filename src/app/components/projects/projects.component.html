@@ -1,18 +1,92 @@
 <canvas #bgCanvas class="background-canvas"></canvas>
 
 <section class="projects-section">
-  <h1 class="title">My Projects</h1>
+  <h1 class="title font-bold">My Projects</h1>
+
+  <!-- WEB PROJECTS -->
+ <h2
+  class="
+    mt-16 mb-6
+    text-center
+    text-3xl md:text-4xl
+    uppercase tracking-wider
+    text-white
+    drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]
+    relative
+  "
+>
+  Web Application Projects
+  <span
+    class="
+      absolute left-1/2 -bottom-4
+      w-20 h-1
+      -translate-x-1/2
+      rounded-full
+      bg-gradient-to-r
+      from-transparent via-blue-400 to-transparent
+    "
+  ></span>
+</h2>
+
+
   <div class="projects-container">
-    <div
-      class="project-card"
-      *ngFor="let project of projects"
-      [routerLink]="project.route"
-    >
-      <img [src]="project.image" [alt]="project.title" class="project-image" />
+      <div
+    class="project-card relative"
+    *ngFor="let project of webProjects"
+  >
+    <!-- LIVE BADGE -->
+<span
+  *ngIf="project.isLive"
+  class="absolute top-3 right-3
+         text-[10px] font-semibold tracking-widest
+         px-2 py-1 rounded-full
+         bg-emerald-500/20 text-emerald-300
+         border border-emerald-400/40
+         backdrop-blur-sm"
+>
+  LIVE
+</span>
+
+      <img [src]="project.image" class="project-image" />
       <div class="project-info">
         <h3>{{ project.title }}</h3>
         <p>{{ project.description }}</p>
       </div>
     </div>
   </div>
+
+  <!-- MOBILE PROJECTS -->
+ <h2
+  class="
+    mt-20 mb-10
+    text-center
+    text-3xl md:text-4xl 
+    uppercase tracking-wider
+    text-white
+    drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]
+  "
+>
+  Mobile Application Projects
+</h2>
+
+  <div class="projects-container">
+    <div
+      class="project-card"
+      *ngFor="let project of mobileProjects"
+    >
+      <img [src]="project.image" class="project-image" />
+      <div class="project-info">
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.description }}</p>
+      </div>
+    </div>
+  </div>
+<button
+  class="contact-btn"
+  routerLink="/contact"
+>
+  Contact Me →
+</button>
+
 </section>
+

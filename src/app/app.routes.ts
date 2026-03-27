@@ -6,7 +6,7 @@ import { EducationComponent } from './components/education/education.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { E2oInternComponent } from './e2ointern/e2o-intern.component';
 import { PencilwalkInterComponent } from './pencilwalkinter/pencilwalk-inter.component';
-
+import { ContactpageComponent } from './components/contactpage/contactpage.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: 'skills', component: SkillComponent },
   { path: 'edu', component: EducationComponent },
   { path: 'pro', component: ProjectsComponent },
-  { path:'pencil',component:PencilwalkInterComponent},
-  {path:'e2o',component:E2oInternComponent},
+  { path: 'pencil', component: PencilwalkInterComponent },
+  { path: 'e2o', component: E2oInternComponent },
+  { path: 'contact', component: ContactpageComponent }
 ];

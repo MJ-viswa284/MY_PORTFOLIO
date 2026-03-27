@@ -1,11 +1,11 @@
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor,NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
   selector: 'app-pencilwalk-inter',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgClass],
   templateUrl: './pencilwalk-inter.component.html',
   styleUrls: ['./pencilwalk-inter.component.css']
 })
@@ -17,12 +17,33 @@ export class PencilwalkInterComponent {
   private animationId: number | null = null;
   private starSpeed = 0.001;
 
-  pencilwalkTasks = [
-    { task: 'Built responsive web apps with ReactJS', year: '2022', tools: 'ReactJS, Node.js, MongoDB' },
-    { task: 'Created REST APIs and integrated with frontend', year: '2022', tools: 'Node.js, Express, MongoDB' },
-    { task: 'Implemented authentication & authorization', year: '2022', tools: 'JWT, bcrypt' },
-    { task: 'Optimized web app performance and SEO', year: '2022', tools: 'React Profiler, Lighthouse' },
-  ];
+pencilwalkTasks = [
+  {
+    task: 'Built responsive web apps with ReactJS',
+    year: '2022',
+    tools: 'ReactJS, Node.js, MongoDB',
+    image: 'assets/shivam.png'
+  },
+  {
+    task: 'Created REST APIs and integrated with frontend',
+    year: '2022',
+    tools: 'Node.js, Express, MongoDB',
+    image: 'assets/pencil/rest-api.png'
+  },
+  {
+    task: 'Implemented authentication & authorization',
+    year: '2022',
+    tools: 'JWT, bcrypt',
+    image: 'assets/pencil/auth.png'
+  },
+  {
+    task: 'Optimized web app performance and SEO',
+    year: '2022',
+    tools: 'React Profiler, Lighthouse',
+    image: 'assets/pencil/performance.png'
+  }
+];
+
 
   ngAfterViewInit(): void {
     this.initThree();
@@ -93,4 +114,38 @@ export class PencilwalkInterComponent {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   };
+
+  previewOpen = false;
+
+  openPreview() {
+    this.previewOpen = true;
+  }
+
+  closePreview() {
+    this.previewOpen = false;
+  }
+
+
+images = [
+  'assets/shivam.png',
+  'assets/pencil/pencil-preview.png',
+  'assets/shivam.png'
+];
+
+currentIndex = 0;
+direction: 'left' | 'right' = 'right';
+
+nextImage() {
+  this.direction = 'right';
+  this.currentIndex =
+    (this.currentIndex + 1) % this.images.length;
+}
+
+prevImage() {
+  this.direction = 'left';
+  this.currentIndex =
+    (this.currentIndex - 1 + this.images.length) % this.images.length;
+}
+
+
 }

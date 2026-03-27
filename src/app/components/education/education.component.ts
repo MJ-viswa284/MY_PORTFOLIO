@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor , NgIf } from '@angular/common';
 import * as THREE from 'three';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-education',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.css']
 })
@@ -63,7 +63,7 @@ export class EducationComponent {
   ];
 
   certs = [
-    { title: 'Fullstack Web Development', issuer: 'Kalvi Institute', year: '2022', logo: 'assets/cert1.png' },
+    { title: 'Fullstack Web Development', issuer: 'Kalvi Institute', year: '2025', logo: 'assets/shivam.png',image: 'assets/shivam.png'  },
   ];
 
   private scene!: THREE.Scene;
@@ -73,6 +73,8 @@ export class EducationComponent {
   private animationId: number | null = null;
   private starSpeed = 0.0005;
   private clock = new THREE.Clock();
+
+      selectedCert: any = null; //=> model pop
 
   // parallax tracking
   private mouseX = 0;
@@ -97,6 +99,17 @@ export class EducationComponent {
     window.removeEventListener('touchmove', this.onTouchMove);
     this.renderer.dispose();
   }
+
+
+
+openCert(cert: any) {
+  this.selectedCert = cert;
+}
+
+closeCert() {
+  this.selectedCert = null;
+}
+
 
   private initThree() {
     this.scene = new THREE.Scene();

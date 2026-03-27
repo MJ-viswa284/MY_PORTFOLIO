@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { RouterOutlet, Router } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
 import { SoundServiceService } from './sound.service.service';
 
 @Component({
@@ -9,13 +9,17 @@ import { SoundServiceService } from './sound.service.service';
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
- 
 })
 export class AppComponent {
   private audio!: HTMLAudioElement;
   isMusicPlaying = false;
 
-  constructor(private zone: NgZone,private sfx: SoundServiceService) {}
+  constructor(
+    private zone: NgZone,
+    private sfx: SoundServiceService,
+    private location: Location,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.audio = new Audio('assets/Fainted.mp3');
@@ -23,6 +27,12 @@ export class AppComponent {
     this.audio.volume = 0.4;
   }
 
+  // ─── Back Button ──────────────────────────────────────────────────────────
+  goBack(): void {
+    this.location.back();
+  }
+
+  // ─── Music ────────────────────────────────────────────────────────────────
   toggleMusic(): void {
     if (!this.audio) return;
 
@@ -31,7 +41,7 @@ export class AppComponent {
       setTimeout(() => {
         this.audio.pause();
         this.zone.run(() => (this.isMusicPlaying = false));
-         this.sfx.setMuted(true); // 🔇 mute SFX
+        this.sfx.setMuted(true);
       }, 350);
     } else {
       this.audio
@@ -39,7 +49,7 @@ export class AppComponent {
         .then(() => {
           this.fadeVolume(0.4, 350);
           this.zone.run(() => (this.isMusicPlaying = true));
-          this.sfx.setMuted(false); // 🔊 enable SFX
+          this.sfx.setMuted(false);
         })
         .catch((err) => console.warn('Playback failed:', err));
     }
