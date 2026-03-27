@@ -22,6 +22,7 @@ const sendEmailTool = {
   ]
 };
 
+
 async function test() {
   try {
     const model = genAI.getGenerativeModel({ 
