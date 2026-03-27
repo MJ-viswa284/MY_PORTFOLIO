@@ -4,34 +4,74 @@ import {
   ElementRef,
   ViewChild
 } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf} from '@angular/common';
 import { Router } from 'express';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [NgFor,RouterLink],
+  imports: [NgFor,RouterLink,NgIf],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements AfterViewInit {
   @ViewChild('bgCanvas', { static: true }) bgCanvas!: ElementRef<HTMLCanvasElement>;
 
-  projects = [
-    {
-      title: 'Student Document Management System',
-      description: 'HTML, CSS, PHP, MySQL',
-      image: 'assets/project1.png',
-      route: '/project1'
-    },
-    {
-      title: 'Kavi Travels',
-      description: 'Angular, TypeScript, .NET, MySQL Workbench',
-      image: 'assets/project2.png',
-      route: '/project2'
-    }
-  ];
+ webProjects = [
+  {
+    title: 'Kavi Travels',
+    description: 'Angular, TypeScript, .NET, MySQL',
+    image: 'assets/project-kavi.png',
+    route: '/kavi'
+  },
+  {
+    title: 'CRM System (Company Project)',
+    description: 'Angular, .NET, MySQL',
+    image: 'assets/project-crm.png',
+    route: '/crm'
+  },
+  {
+    title: 'On-Call Acting Driver (Live)',
+    description: 'Angular, .NET, MySQL',
+    image: 'assets/project-driver.png',
+    route: '/driver',
+    isLive: true
+  },
+  {
+    title: 'E-Commerce Web App',
+    description: 'Angular, .NET',
+    image: 'assets/project-ecommerce.png',
+    route: '/ecommerce'
+  },
+  {
+    title: 'Dynamic CRM (Ongoing)',
+    description: 'Angular, .NET, Azure',
+    image: 'assets/project-dynamic-crm.png',
+    route: '/dynamic-crm'
+  }
+];
+
+mobileProjects = [
+  {
+    title: 'On-Call Acting Driver – User App',
+    description: '.NET MAUI',
+    image: 'assets/mobile-driver.png',
+    route: '/mobile-driver'
+  },
+  {
+    title: 'E-Commerce Mobile App',
+    description: '.NET MAUI',
+    image: 'assets/mobile-ecommerce.png',
+    route: '/mobile-ecommerce'
+  },
+  {
+    title: 'Influencer App',
+    description: '.NET MAUI',
+    image: 'assets/mobile-influencer.png',
+    route: '/mobile-influencer'
+  }
+];
 
   ngAfterViewInit() {
     this.startStarfield();
@@ -83,7 +123,7 @@ export class ProjectsComponent implements AfterViewInit {
 
         if (sx < 0 || sx >= canvas.width || sy < 0 || sy >= canvas.height) continue;
 
-        const size = (1 - star.z / canvas.width) * star.size;
+        const size = Math.max(0.3, (1 - star.z / canvas.width) * star.size);
         ctx.beginPath();
         ctx.fillStyle = star.color;
         ctx.shadowBlur = 8;
@@ -132,15 +172,17 @@ export class ProjectsComponent implements AfterViewInit {
     }
 
    animate();
+   
 
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    // Re-center stars after resize
-    for (let star of stars) {
-      star.x = Math.random() * canvas.width - canvas.width / 2;
-      star.y = Math.random() * canvas.height - canvas.height / 2;
-    }
-  });
+ const resizeCanvas = () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+};
+
+resizeCanvas(); // initial call
+
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('orientationchange', resizeCanvas);
+
 }
 }

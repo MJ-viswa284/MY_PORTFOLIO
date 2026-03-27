@@ -13,30 +13,24 @@ import { Router } from '@angular/router';
 })
 export class SkillComponent implements OnInit, AfterViewInit, OnDestroy {
   frontendSkills = [
-    { name: 'HTML', logo: 'assets/html.png' },
-    { name: 'CSS', logo: 'assets/css-3.png' },
-    { name: 'JavaScript', logo: 'assets/java-script.png' },
-    { name: 'React.js', logo: 'assets/react.png' },
-    { name: 'Angular', logo: 'assets/angular.png' },
-    { name: 'Tailwind CSS', logo: 'assets/tailwindcss.png' },
-    { name: 'Bootstrap', logo: 'assets/bootstrap.png' },
-    { name: 'TypeScript', logo: 'assets/typescript.png' }
-  ];
+  { name: 'Angular', logo: 'assets/angular.png' },
+  { name: 'TypeScript', logo: 'assets/typescript.png' },
+  { name: 'Tailwind CSS', logo: 'assets/tailwindcss.png' },
+  { name: 'Bootstrap', logo: 'assets/bootstrap.png' }
+];
 
-  backendSkills = [
-    { name: 'Node.js', logo: 'assets/node-js.png' },
-    { name: 'MongoDB', logo: 'assets/mongodb.png' },
-    { name: 'MySQL', logo: 'assets/mysql.png' },
-    { name: '.NET', logo: 'assets/.net.png' },
-    { name: 'Firebase', logo: 'assets/firebase.png' },
-    { name: 'PHP', logo: 'assets/php.png' }
-  ];
 
-  tools = [
-    { name: 'Git', logo: 'assets/git.png' },
-    { name: 'GitHub', logo: 'assets/github.png' },
-    { name: 'Thunder Client', logo: 'assets/tc.png' }
-  ];
+ backendSkills = [
+  { name: '.NET', logo: 'assets/.net.png' },
+  { name: 'MySQL', logo: 'assets/mysql.png' }
+];
+
+
+ tools = [
+  { name: 'GitHub', logo: 'assets/github.png' },
+  { name: 'Thunder Client', logo: 'assets/tc.png' }
+];
+
 
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;

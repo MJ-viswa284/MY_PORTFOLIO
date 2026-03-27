@@ -40,10 +40,10 @@
     <div class="certs-grid mb-16">
       <div *ngFor="let c of certs; let j = index" 
            class="cert-card" 
-           [style.animationDelay]="(j * 0.08) + 's'">
+           [style.animationDelay]="(j * 0.08) + 's'" (click) = "openCert(c);">
         <img [src]="c.logo" [alt]="c.title" />
         <div class="cert-info">
-          <div class="cert-title">{{ c.title }}</div>
+          <div class="cert-title">{{ c.title }}</div> 
           <div class="cert-org">{{ c.issuer }} • {{ c.year }}</div>
         </div>
       </div>
@@ -76,3 +76,26 @@
     </div>
   </div>
 </section>
+
+
+<!-- CERTIFICATE POPUP MODAL -->
+<div class="cert-modal-backdrop" *ngIf="selectedCert" (click)="closeCert()">
+  <div class="cert-modal" (click)="$event.stopPropagation()">
+
+    <img
+      [src]="selectedCert.image"
+      alt="Certificate"
+      class="cert-modal-image"
+    />
+<h3 class="text-xl font-semibold mt-2 text-white drop-shadow-[0_0_6px_rgba(255,255,255,0.25)]">
+  {{ selectedCert.title }}
+</h3>
+
+<p class="text-sm text-slate-300">
+  {{ selectedCert.issuer }} • {{ selectedCert.year }}
+</p>
+
+    <button class="close-btn" (click)="closeCert()">Close</button>
+  </div>
+</div>
+

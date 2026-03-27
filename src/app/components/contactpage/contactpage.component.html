@@ -1,0 +1,100 @@
+<section class="min-h-screen flex items-center justify-center
+         px-6 py-16 text-white
+         bg-gradient-to-br from-[#050510] via-[#0b0b20] to-black">
+  <div class="w-full max-w-4xl">
+
+    <!-- Heading -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-wide">
+        Contact
+      </h1>
+      <p class="mt-4 text-gray-400 text-sm md:text-base">
+        Let’s connect and build something meaningful.
+      </p>
+    </div>
+
+    <!-- Contact Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
+         gap-y-6 gap-x-2 mb-16 justify-items-center">
+
+
+      <!-- Email -->
+      <a [href]="gmailComposeUrl" target="_blank" rel="noopener" class="group w-full max-w-[240px]
+         rounded-xl border border-white/10
+         bg-white/5 backdrop-blur-md
+         p-6 text-center transition
+         hover:bg-white/10 hover:border-white/30">
+        <p class="text-sm text-gray-400">Email</p>
+        <p class="mt-2 font-medium group-hover:text-cyan-300">
+          {{ email }}
+        </p>
+      </a>
+
+
+
+      <!-- LinkedIn -->
+      <a [href]="linkedIn.url" target="_blank" class="group rounded-xl border border-white/10
+         bg-white/5 backdrop-blur-md
+         p-6 text-center transition
+         hover:bg-white/10 hover:border-white/30 w-full max-w-[240px]">
+        <p class="text-sm text-gray-400">{{ linkedIn.label }}</p>
+        <p class="mt-2 font-medium group-hover:text-cyan-300">
+          {{ linkedIn.text }}
+        </p>
+      </a>
+
+
+      <!-- Resume -->
+      <a [href]="resume.url" download class="group rounded-xl border border-white/10
+         bg-white/5 backdrop-blur-md
+         p-6 text-center transition
+         hover:bg-white/10 hover:border-white/30 w-full max-w-[240px]">
+        <p class="text-sm text-gray-400">{{ resume.label }}</p>
+        <p class="mt-2 font-medium group-hover:text-cyan-300">
+          {{ resume.text }}
+        </p>
+      </a>
+
+
+    </div>
+
+    <!-- Contact Form -->
+    <form (ngSubmit)="onSubmit()" #form="ngForm" class="max-w-2xl mx-auto space-y-6
+         rounded-2xl border border-white/10
+         bg-white/5 backdrop-blur-md p-8">
+
+
+      <input type="text" placeholder="Your name" [(ngModel)]="contactForm.name" name="name" required
+        class="w-full bg-transparent border-b border-white/20 px-2 py-3" />
+
+      <input type="email" placeholder="Your email" [(ngModel)]="contactForm.email" name="email" required
+        class="w-full bg-transparent border-b border-white/20 px-2 py-3" />
+
+      <textarea rows="4" placeholder="Your message" [(ngModel)]="contactForm.message" name="message" required
+        class="w-full bg-transparent border-b border-white/20 px-2 py-3 resize-none"></textarea>
+
+      <button type="submit" [disabled]="isSending" class="mt-6 w-full rounded-full
+         border border-white/20
+         bg-white/10 py-3
+         transition hover:bg-white/20
+         disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ isSending ? 'SENDING…' : 'SEND MESSAGE →' }}
+      </button>
+
+      <p *ngIf="isSuccess" class="text-green-400 text-center text-sm mt-4">
+        Message sent successfully!
+      </p>
+
+      <p *ngIf="isError" class="text-red-400 text-center text-sm mt-4">
+        Something went wrong. Please try again.
+      </p>
+
+
+    </form>
+
+    <p class="text-center text-xs text-gray-500 mt-6">
+      I usually respond within 24 hours.
+    </p>
+
+  </div>
+</section>
