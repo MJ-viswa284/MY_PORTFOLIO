@@ -41,7 +41,7 @@
       <div *ngFor="let c of certs; let j = index" 
            class="cert-card" 
            [style.animationDelay]="(j * 0.08) + 's'" (click) = "openCert(c);">
-        <img [src]="c.logo" [alt]="c.title" />
+        <img loading="lazy" decoding="async"  [src]="c.logo" [alt]="c.title" />
         <div class="cert-info">
           <div class="cert-title">{{ c.title }}</div> 
           <div class="cert-org">{{ c.issuer }} • {{ c.year }}</div>
@@ -56,7 +56,7 @@
            class="intern-card"
            [style.animationDelay]="(j * 0.08) + 's'"
            (click)="enterRealm(j)">
-        <img [src]="i.logo" [alt]="i.title" />
+        <img loading="lazy" decoding="async"  [src]="i.logo" [alt]="i.title" />
         <div class="intern-info">
           <div class="intern-title type-animate">{{ i.title }}</div>
           <div class="intern-company glow-text">{{ i.company }} • {{ i.year }}</div>
@@ -82,7 +82,7 @@
 <div class="cert-modal-backdrop" *ngIf="selectedCert" (click)="closeCert()">
   <div class="cert-modal" (click)="$event.stopPropagation()">
 
-    <img
+    <img loading="lazy" decoding="async" 
       [src]="selectedCert.image"
       alt="Certificate"
       class="cert-modal-image"

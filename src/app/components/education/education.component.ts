@@ -254,11 +254,16 @@ private animateStars = () => {
     const animatePortal = () => {
       return new Promise<void>(resolve => {
         let elapsed = 0;
-        const portalAnimation = () => {
-          elapsed += 16;
-          this.stars.rotation.y += 0.07;
+        let lastTime = performance.now();
+        const portalAnimation = (currentTime: DOMHighResTimeStamp) => {
+          const dt = currentTime - lastTime;
+          lastTime = currentTime;
+          const timeScale = dt / 16.666;
+          elapsed += dt;
+          
+          this.stars.rotation.y += 0.07 * timeScale;
           for (let i = 0; i < positions.length; i += 3) {
-            const factor = Math.sin((elapsed / 1000) * Math.PI) * explosionAmount;
+            const factor = Math.sin((elapsed / 1000) * Math.PI) * explosionAmount * timeScale;
             positions[i] += (positions[i] / 1000) * factor;
             positions[i + 1] += (positions[i + 1] / 1000) * factor;
           }
@@ -267,7 +272,7 @@ private animateStars = () => {
           if (elapsed < 1000) requestAnimationFrame(portalAnimation);
           else resolve();
         };
-        portalAnimation();
+        requestAnimationFrame(portalAnimation);
       });
     };
 
