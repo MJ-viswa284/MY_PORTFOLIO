@@ -49,7 +49,7 @@
       </button>
 
       <!-- IMAGE -->
-      <img
+      <img loading="lazy" decoding="async" 
         [src]="images[currentIndex]"
         alt="E2O Internship Preview"
         class="w-full h-full object-cover transition-all duration-500 ease-out"
@@ -92,7 +92,7 @@
            shadow-[0_0_40px_rgba(255,255,255,0.3),0_0_80px_rgba(255,255,255,0.15)]
            animate-[modalEnter_0.45s_cubic-bezier(0.22,1,0.36,1)]"
   >
-    <img
+    <img loading="lazy" decoding="async" 
       [src]="images[currentIndex]"
       alt="E2O Full Preview"
       class="w-full rounded-xl mb-4"

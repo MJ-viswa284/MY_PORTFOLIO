@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #05050a; /* Deep cosmic dark to prevent white flashes */
+  color: white;
+}

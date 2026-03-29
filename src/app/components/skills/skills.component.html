@@ -17,7 +17,7 @@
 <h2 class="section-title">Frontend Skills</h2>
 <div class="skills-container">
   <div *ngFor="let skill of frontendSkills" class="skill-card">
-    <img [src]="skill.logo" [alt]="skill.name" />
+    <img loading="lazy" decoding="async"  [src]="skill.logo" [alt]="skill.name" />
     <span>{{ skill.name }}</span>
   </div>
 </div>
@@ -26,7 +26,7 @@
 <h2 class="section-title">Backend Skills</h2>
 <div class="skills-container">
   <div *ngFor="let skill of backendSkills" class="skill-card">
-    <img [src]="skill.logo" [alt]="skill.name" />
+    <img loading="lazy" decoding="async"  [src]="skill.logo" [alt]="skill.name" />
     <span>{{ skill.name }}</span>
   </div>
 </div>
@@ -35,12 +35,12 @@
 <div class="skills-container">
 
   <div class="skill-card">
-    <img src="assets/cloud-computing.png" alt="Azure Cloud" />
+    <img loading="lazy" decoding="async"  src="assets/cloud-computing.png" alt="Azure Cloud" />
     <span>Azure Cloud</span>
   </div>
 
   <div class="skill-card">
-    <img src="assets/maui.png" alt=".NET MAUI" />
+    <img loading="lazy" decoding="async"  src="assets/maui.png" alt=".NET MAUI" />
     <span>.NET MAUI</span>
   </div>
 
@@ -54,7 +54,7 @@
   <h2 class="section-title">Tools & Platforms</h2>
   <div class="skills-grid">
     <div class="skill-card" *ngFor="let tool of tools">
-      <img [src]="tool.logo" [alt]="tool.name" class="skill-logo" />
+      <img loading="lazy" decoding="async"  [src]="tool.logo" [alt]="tool.name" class="skill-logo" />
       <p>{{ tool.name }}</p>
     </div>
   </div>
