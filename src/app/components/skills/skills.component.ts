@@ -31,6 +31,11 @@ export class SkillComponent implements OnInit, AfterViewInit, OnDestroy {
   { name: 'Thunder Client', logo: 'assets/tc.png' }
 ];
 
+ aiSkills = [
+  { name: 'LangChain', icon: '🔗' },
+  { name: 'Hugging Face', icon: '🤗' },
+];
+
 
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
@@ -233,6 +238,10 @@ private animateStars = () => {
 
   goToSkills() {
     this.router.navigate(['/edu']);
+  }
+
+  goToAI() {
+    this.router.navigate(['/ai-engineer']);
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,18 @@
+{
+  "/api-alle": {
+    "target": "https://api.alle-ai.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api-alle": ""
+    }
+  },
+  "/api-groq": {
+    "target": "https://api.groq.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api-groq": "/openai"
+    }
+  }
+}

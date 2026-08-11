@@ -57,6 +57,12 @@ export class EducationComponent {
       company: 'E2O Technologies',
       year: '2025-present',
       description: 'Built responsive web apps using AngularJS, .NET, and MySql.'
+    },
+    {
+      title: 'AI Engineer',
+      company: 'Self-Driven & Freelance',
+      year: '2025-present',
+      description: 'Building LLM-powered applications, AI chatbots, and intelligent automation systems using Groq, LangChain, and modern AI APIs.'
     }
   ];
 
@@ -287,6 +293,7 @@ private animateStars = () => {
       
       if (index === 0) this.router.navigate(['/pencil']);
       else if (index === 1) this.router.navigate(['/e2o']);
+      else if (index === 2) this.router.navigate(['/ai-engineer']);
     });
   }
 }

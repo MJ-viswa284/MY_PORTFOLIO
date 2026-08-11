@@ -184,3 +184,206 @@
   color: #fff;
   font-size: 0.9rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* 🤖 AI DEVELOPMENT SECTION                                       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+.ai-dev-section {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ── Divider ──────────────────────────────────────────────────── */
+.ai-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.ai-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent);
+}
+
+.ai-divider-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #a78bfa;
+  white-space: nowrap;
+  padding: 6px 16px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.08);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
+}
+
+/* ── Subtitle ──────────────────────────────────────────────────── */
+.ai-dev-subtitle {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 520px;
+  margin: 0;
+}
+
+/* ── AI Chips ──────────────────────────────────────────────────── */
+.ai-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 700px;
+}
+
+.ai-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  cursor: default;
+  animation: chipFadeIn 0.6s ease both;
+}
+
+.ai-chip:hover {
+  background: rgba(139, 92, 246, 0.18);
+  border-color: rgba(139, 92, 246, 0.65);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.3);
+}
+
+.ai-chip-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 5px rgba(139, 92, 246, 0.6));
+}
+
+.ai-chip-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #c4b5fd;
+  white-space: nowrap;
+}
+
+@keyframes chipFadeIn {
+  from { opacity: 0; transform: scale(0.85) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Ambient CTA Button ────────────────────────────────────────── */
+.ai-cta-wrapper {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.ai-ambient-btn {
+  position: relative;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Outer ambient orb glow */
+.ai-btn-glow {
+  position: absolute;
+  inset: -16px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at center,
+    rgba(139, 92, 246, 0.35) 0%,
+    rgba(99, 102, 241, 0.15) 40%,
+    transparent 70%
+  );
+  animation: ambientPulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ambientPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.8; }
+  50%       { transform: scale(1.15); opacity: 1; }
+}
+
+/* Button inner content pill */
+.ai-btn-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e0d9ff;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg,
+    rgba(109, 40, 217, 0.45),
+    rgba(79, 70, 229, 0.45)
+  );
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.4),
+    0 0 50px rgba(99, 102, 241, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: all 0.3s ease;
+}
+
+.ai-ambient-btn:hover .ai-btn-content {
+  background: linear-gradient(135deg,
+    rgba(139, 92, 246, 0.65),
+    rgba(99, 102, 241, 0.65)
+  );
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.65),
+    0 0 70px rgba(99, 102, 241, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.ai-btn-icon {
+  font-size: 1.3rem;
+  animation: iconFloat 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(196, 181, 253, 0.8));
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-4px); }
+}
+
+.ai-btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.ai-ambient-btn:hover .ai-btn-arrow {
+  transform: translateX(5px);
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ai-dev-section { padding: 2rem 1rem 1.5rem; gap: 1.5rem; }
+  .ai-btn-content { font-size: 0.9rem; padding: 14px 24px; }
+  .ai-chips-row { gap: 8px; }
+}

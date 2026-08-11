@@ -4,7 +4,10 @@ const path = require('path');
 const targetPath = path.join(__dirname, 'src/environments/environment.ts');
 const envConfigFile = `export const environment = {
   production: true,
-  geminiApiKey: '${process.env.GEMINI_API_KEY || ''}'
+  geminiApiKey: '${process.env.GEMINI_API_KEY || ''}',
+  openaiApiKey: '${process.env.OPENAI_API_KEY || ''}',
+  alleApiKey: '${process.env.ALLE_API_KEY || ''}',
+  groqApiKey: '${process.env.GROQ_API_KEY || ''}'
 };
 `;
 

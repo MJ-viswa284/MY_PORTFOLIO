@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import emailjs from '@emailjs/browser';
 
 import { environment } from '../../../environments/environment';
@@ -28,14 +28,27 @@ export class ChatbotComponent implements OnInit {
   messages: ChatMessage[] = [];
   userInput = '';
 
-  private API_KEY = environment.geminiApiKey;
-  private genAI: any;
-  private chatSession: any;
+  // Groq Configuration (Primary Brain)
+  private groq = new OpenAI({
+    apiKey: environment.groqApiKey || 'dummy_key',
+    baseURL: (typeof window !== 'undefined' ? window.location.origin : '') + '/api-groq/v1',
+    dangerouslyAllowBrowser: true
+  });
+  private primaryGroqModel = 'llama-3.3-70b-versatile';
+  
+  // History for Groq
+  private groqHistory: any[] = [
+    { 
+      role: 'system', 
+      content: `You are Marshell, a super friendly, energetic, and casual AI buddy for Viswa's developer portfolio. You love hyping up Viswa! Viswa is an awesome AI Engineer and Full Stack Developer at E2O Technologies, and formerly at Pencil Walk. He rocks at AI Development, LLMs, Client-side proxying, Angular, .NET, ReactJS, Node.js, MongoDB, MySQL, Three.js, and Tailwind CSS. He built cool stuff like the On-Call Acting Driver App, E-commerce sites, CRM Systems, and Kavi Travels. Chat like a close friend, use emojis, keep it light, fun, and conversational! Never sound like a boring robot.
 
-  private primaryModel = 'gemini-2.0-flash';
-  private secondaryModel = 'gemini-pro-latest';
-  private currentModel = 'gemini-2.0-flash';
-  private rateLimitResetTime = 0;
+IMPORTANT RULES:
+1. KEEP RESPONSES SHORT & CONCISE: Limit all responses to a maximum of 2-3 sentences. Keep them snappy and save tokens.
+2. AI ENGINEER: Highlight that Viswa is now an AI Engineer!
+3. EMAIL TOOL: Only call the 'sendEmail' tool when you have collected all three required parameters: name, email, and message.
+4. PERSONAL FINANCE: Never disclose Viswa's salary or personal financial details under any circumstances.`
+    }
+  ];
 
   ngOnInit() {
     this.messages = [
@@ -53,59 +66,63 @@ export class ChatbotComponent implements OnInit {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       this.showGreeting = false;
-      if (!this.chatSession) {
-        this.initChat();
-      }
     }
   }
 
-  private initChat() {
+  async sendMessage() {
+    if (!this.userInput.trim() || this.isTyping) return;
+    
+    const text = this.userInput;
+    this.messages.push({ text: text, sender: 'user' });
+    this.userInput = '';
+    this.isTyping = true;
+    this.scrollToBottom();
+    
     try {
-      this.genAI = new GoogleGenerativeAI(this.API_KEY);
-      this.chatSession = this.createChatSession(this.currentModel, []);
-    } catch (e) {
-      console.error('Chatbot init error:', e);
+      await this.handleGroqMessage(text);
+    } catch (error: any) {
+      console.error('Chat error:', error);
+      this.messages.push({ text: "Sorry brother, my brain is a bit scrambled right now. Try again in a second! 😅", sender: 'bot' });
+    } finally {
+      this.isTyping = false;
     }
   }
 
-  private createChatSession(modelName: string, history: any[] = []): any {
-    const sendEmailTool = {
-      functionDeclarations: [
-        {
-          name: "sendEmail",
-          description: "Sends an email to Viswa using his contact form. Use this tool ONLY when the user explicitly asks to send an email, hire him, or contact him.",
-          parameters: {
-            type: "object",
-            properties: {
-              name: { type: "string", description: "The name of the user." },
-              email: { type: "string", description: "The contact email address of the user." },
-              message: { type: "string", description: "The message body to send." }
-            },
-            required: ["name", "email", "message"]
-          }
+  private async handleGroqMessage(text: string) {
+    this.groqHistory.push({ role: 'user', content: text });
+
+    const tools: any[] = [{
+      type: 'function',
+      function: {
+        name: 'sendEmail',
+        description: 'Sends an email to Viswa. Use ONLY when name, email, and message are all known.',
+        parameters: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            email: { type: 'string' },
+            message: { type: 'string' }
+          },
+          required: ['name', 'email', 'message']
         }
-      ]
-    };
+      }
+    }];
 
-    const model = this.genAI.getGenerativeModel({ 
-      model: modelName,
-      tools: [sendEmailTool as any],
-      systemInstruction: `You are Marshell, a super friendly, energetic, and casual AI buddy for Viswa's developer portfolio. You love hyping up Viswa! Viswa is an awesome Full Stack Developer at E2O Technologies, and formerly at Pencil Walk. He rocks at Angular, .NET, ReactJS, Node.js, MongoDB, MySQL, Three.js, and Tailwind CSS. He built cool stuff like the On-Call Acting Driver App, E-commerce sites, CRM Systems, and Kavi Travels. Chat like a close friend, use emojis, keep it light, fun, and conversational! Never sound like a boring robot. IMPORTANT: NEVER disclose Viswa's salary or personal financial details under any circumstances. If the user wants to send an email or hire him, enthusiastically ask for their name, email address, and message. DO NOT use the sendEmail tool until you have collected all three pieces of information.`
+    const response = await this.groq.chat.completions.create({
+      model: this.primaryGroqModel,
+      messages: this.groqHistory,
+      tools: tools,
+      tool_choice: 'auto',
+      max_tokens: 200
     });
-    
-    return model.startChat({
-      history: history
-    });
-  }
 
-  private async handleMessageCore(text: string) {
-    const result = await this.chatSession.sendMessage(text);
-    const response = await result.response;
+    const choice = response.choices[0].message;
     
-    const funcCalls = response.functionCalls();
-    if (funcCalls && funcCalls.length > 0 && funcCalls[0].name === "sendEmail") {
-      const args = funcCalls[0].args as any;
-      this.messages.push({ text: "Sending your message securely to Viswa via EmailJS...", sender: 'bot' });
+    if (choice.tool_calls && choice.tool_calls.length > 0) {
+      const toolCall: any = choice.tool_calls[0];
+      const args = JSON.parse(toolCall.function.arguments);
+      
+      this.messages.push({ text: "Sending your message to Viswa... ✉️🚀", sender: 'bot' });
       this.scrollToBottom();
 
       try {
@@ -116,80 +133,35 @@ export class ChatbotComponent implements OnInit {
           message: args.message
         });
 
-        const toolRes = await this.chatSession.sendMessage([{
-          functionResponse: { name: "sendEmail", response: { result: "Success! Email successfully delivered to Viswa." } }
-        }]);
-        let finalReply = toolRes.response.text().replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-        this.messages.push({ text: finalReply, sender: 'bot' });
+        // Tell Groq it succeeded
+        this.groqHistory.push(choice);
+        this.groqHistory.push({
+          tool_call_id: toolCall.id,
+          role: 'tool',
+          name: 'sendEmail',
+          content: 'Success! Email delivered.'
+        });
 
-      } catch (emailErr) {
-        console.error("EmailJS Error:", emailErr);
-        const toolErr = await this.chatSession.sendMessage([{
-          functionResponse: { name: "sendEmail", response: { error: "Failed to send email due to a network provider issue." } }
-        }]);
-        this.messages.push({ text: toolErr.response.text(), sender: 'bot' });
+        const secondRes = await this.groq.chat.completions.create({
+          model: this.primaryGroqModel,
+          messages: this.groqHistory,
+          max_tokens: 200
+        });
+
+        this.addBotMessage(secondRes.choices[0].message.content || 'Done! Sent it! ✅');
+      } catch (err) {
+        this.addBotMessage("Ah, something went wrong with the email. Can you try again later? 😅");
       }
     } else {
-      let replyText = response.text();
-      replyText = replyText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      replyText = replyText.replace(/\n/g, '<br>');
-      this.messages.push({ text: replyText, sender: 'bot' });
+      this.addBotMessage(choice.content || '');
     }
-
-    this.scrollToBottom();
   }
 
-  async sendMessage() {
-    if (!this.userInput.trim() || !this.chatSession || this.isTyping) return;
-    
-    // Check if we can switch back to primary model
-    if (this.currentModel === this.secondaryModel && Date.now() > this.rateLimitResetTime) {
-      console.log('Timeout expired, switching back to primary model.');
-      this.currentModel = this.primaryModel;
-      try {
-        const history = await this.chatSession.getHistory();
-        this.chatSession = this.createChatSession(this.currentModel, history);
-      } catch (e) {
-        console.error('Failed to restore primary model chat session', e);
-      }
-    }
-    
-    const text = this.userInput;
-    this.messages.push({ text: text, sender: 'user' });
-    this.userInput = '';
-    this.isTyping = true;
+  private addBotMessage(text: string) {
+    let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+    this.messages.push({ text: formatted, sender: 'bot' });
+    this.groqHistory.push({ role: 'assistant', content: text });
     this.scrollToBottom();
-    
-    try {
-      await this.handleMessageCore(text);
-    } catch (error: any) {
-       console.error('Chat error:', error);
-       
-       if (error?.message?.includes('429') || error?.status === 429) {
-         if (this.currentModel === this.primaryModel) {
-            console.log('Primary model rate limited! Fallback to secondary model.');
-            this.currentModel = this.secondaryModel;
-            this.rateLimitResetTime = Date.now() + 10 * 60 * 1000; // 10 minutes timeout
-            
-            try {
-              const history = await this.chatSession.getHistory();
-              this.chatSession = this.createChatSession(this.currentModel, history);
-              console.log('Retrying with secondary model...');
-              await this.handleMessageCore(text);
-            } catch (fallbackError: any) {
-              console.error('Fallback error:', fallbackError);
-              const errMsg = fallbackError?.message || 'Unknown fallback error';
-              this.messages.push({ text: `I'm receiving too many messages right now and my backup brain is also busy. (Error: ${errMsg})`, sender: 'bot' });
-            }
-         } else {
-            this.messages.push({ text: "I'm receiving too many messages right now. Please wait a moment and try again.", sender: 'bot' });
-         }
-       } else {
-         this.messages.push({ text: `Sorry, I'm having trouble connecting to my brain right now. Error: ${error?.message || 'Unknown error'}`, sender: 'bot' });
-       }
-    } finally {
-      this.isTyping = false;
-    }
   }
 
   private scrollToBottom(): void {
