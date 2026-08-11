@@ -25,19 +25,19 @@ export class ContactpageComponent {
 
 
   // ===== Contact Info (Single Source of Truth) =====
-  email = 'Visveswaran760@gmail.com';
+  email = 'mjcreation2k24@gmail.com';
   gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${this.email}`;
   
   linkedIn = {
     label: 'LinkedIn',
     text: 'Connect',
-    url: 'www.linkedin.com/in/visveswaran-m'
+    url: 'https://www.linkedin.com/in/visveswaran-m'
   };
 
   resume = {
     label: 'Resume',
-    text: 'Download PDF',
-    url: 'assets/My-current-professional-resume.pdf'
+    text: 'Download DOCX',
+    url: 'assets/Visveswaran_M_Resume_Tight.docx'
   };
 
   // ===== Form Model =====
@@ -90,7 +90,7 @@ export class ContactpageComponent {
     // Programmatically trigger the download
     const link = document.createElement('a');
     link.href = this.resume.url;
-    link.download = 'My-current-professional-resume.pdf';
+    link.download = 'Visveswaran_M_Resume_Tight.docx';
     link.click();
     link.remove();
     

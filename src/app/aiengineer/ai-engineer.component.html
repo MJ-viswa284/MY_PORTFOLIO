@@ -1,0 +1,129 @@
+<!-- 🧠 Neural Network Canvas Background -->
+<canvas #neuralCanvas class="neural-canvas"></canvas>
+
+<!-- ✨ Ambient Glow Overlay -->
+<div class="ambient-overlay"></div>
+
+<section class="ai-section">
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- HERO BLOCK -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="hero-block">
+    <div class="badge-chip">
+      <span class="badge-dot"></span>
+      AI Engineer
+    </div>
+
+    <h1 class="hero-title">
+      Building the Future<br />
+      <span class="gradient-text">with Artificial Intelligence</span>
+    </h1>
+
+    <p class="hero-sub">
+      Designing and deploying intelligent systems — from LLM-powered chatbots
+      to AI-driven automation — blending engineering precision with creative problem-solving.
+    </p>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">AI Projects</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">LLM APIs Used</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Ideas to Build</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- WHAT I DO -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section-block">
+    <h2 class="section-heading">
+      What I Do as an <span class="gradient-text">AI Engineer</span>
+    </h2>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon">🧠</div>
+        <h3>LLM Integration</h3>
+        <p>Integrating large language models (Groq, OpenAI, Gemini) into real-world applications with structured prompts and efficient inference pipelines.</p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🔗</div>
+        <h3>AI Workflow Design</h3>
+        <p>Building multi-step AI pipelines using Semantic Kernel, vector stores, and RAG (Retrieval-Augmented Generation) to handle complex tasks intelligently.</p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">✨</div>
+        <h3>Prompt Engineering</h3>
+        <p>Crafting precise, cost-efficient system prompts and user inputs that maximize model accuracy while keeping API footprints lean and token-optimized.</p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🚀</div>
+        <h3>AI-Powered Products</h3>
+        <p>Shipping production-ready AI features inside Angular & .NET full-stack apps — from intelligent chatbots to smart classification and automation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- AI TOOLS & STACK -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section-block">
+    <h2 class="section-heading">
+      My <span class="gradient-text">AI Toolkit</span>
+    </h2>
+
+    <div class="tools-grid">
+      <div class="tool-chip" *ngFor="let tool of tools">
+        <span class="tool-icon">{{ tool.icon }}</span>
+        <span class="tool-name">{{ tool.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- AI PROJECTS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section-block">
+    <h2 class="section-heading">
+      <span class="gradient-text">AI Projects</span> I've Built
+    </h2>
+
+    <div class="projects-grid">
+      <div class="ai-project-card" *ngFor="let project of projects; let i = index"
+           [style.animation-delay]="(i * 0.15) + 's'">
+        <div class="project-icon-wrap">{{ project.icon }}</div>
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-desc">{{ project.desc }}</p>
+        <div class="tags-row">
+          <span class="tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- CTA -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="cta-block">
+    <p class="cta-text">Want to collaborate on an AI project?</p>
+    <a routerLink="/contact" class="cta-btn">
+      Let's Build Something Smart →
+    </a>
+  </div>
+
+</section>

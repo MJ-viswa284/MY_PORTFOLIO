@@ -157,43 +157,43 @@ export class AppComponent {
   }
 
   // ─── Security Measures ───────────────────────────────────────────────────
-  @HostListener('document:contextmenu', ['$event'])
-  onRightClick(event: Event) {
-    event.preventDefault(); // Disables right-click
-  }
+  // @HostListener('document:contextmenu', ['$event'])
+  // onRightClick(event: Event) {
+  //   event.preventDefault(); // Disables right-click
+  // }
 
-  @HostListener('document:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    // Prevent F12, Ctrl+Shift+I (DevTools), Ctrl+U (View Source), Ctrl+S (Save), Ctrl+P (Print), PrintScreen
-    if (
-      event.key === 'F12' ||
-      (event.ctrlKey && event.shiftKey && (event.key.toLowerCase() === 'i' || event.key.toLowerCase() === 'j' || event.key.toLowerCase() === 'c')) ||
-      (event.ctrlKey && (event.key.toLowerCase() === 'u' || event.key.toLowerCase() === 's' || event.key.toLowerCase() === 'p')) ||
-      event.key === 'PrintScreen' ||
-      (event.metaKey && event.shiftKey && event.key.toLowerCase() === 's')
-    ) {
-      event.preventDefault();
-    }
-  }
+  // @HostListener('document:keydown', ['$event'])
+  // onKeyDown(event: KeyboardEvent) {
+  //   // Prevent F12, Ctrl+Shift+I (DevTools), Ctrl+U (View Source), Ctrl+S (Save), Ctrl+P (Print), PrintScreen
+  //   if (
+  //     event.key === 'F12' ||
+  //     (event.ctrlKey && event.shiftKey && (event.key.toLowerCase() === 'i' || event.key.toLowerCase() === 'j' || event.key.toLowerCase() === 'c')) ||
+  //     (event.ctrlKey && (event.key.toLowerCase() === 'u' || event.key.toLowerCase() === 's' || event.key.toLowerCase() === 'p')) ||
+  //     event.key === 'PrintScreen' ||
+  //     (event.metaKey && event.shiftKey && event.key.toLowerCase() === 's')
+  //   ) {
+  //     event.preventDefault();
+  //   }
+  // }
 
-  @HostListener('document:keyup', ['$event'])
-  onKeyUp(event: KeyboardEvent) {
-      if (event.key === 'PrintScreen') {
-          // Attempt to hijack clipboard for PrintScreen
-          try {
-             navigator.clipboard.writeText('Screenshots are disabled for this portfolio.');
-          } catch(e) {}
-      }
-  }
+  // @HostListener('document:keyup', ['$event'])
+  // onKeyUp(event: KeyboardEvent) {
+  //     if (event.key === 'PrintScreen') {
+  //         // Attempt to hijack clipboard for PrintScreen
+  //         try {
+  //            navigator.clipboard.writeText('Screenshots are disabled for this portfolio.');
+  //         } catch(e) {}
+  //     }
+  // }
 
-  @HostListener('document:copy', ['$event'])
-  onCopy(event: Event) {
-    event.preventDefault(); // Disables copying text
-  }
+  // @HostListener('document:copy', ['$event'])
+  // onCopy(event: Event) {
+  //   event.preventDefault(); // Disables copying text
+  // }
 
-  @HostListener('document:dragstart', ['$event'])
-  onDragStart(event: Event) {
-    event.preventDefault(); // Disables dragging images/assets
-  }
+  // @HostListener('document:dragstart', ['$event'])
+  // onDragStart(event: Event) {
+  //   event.preventDefault(); // Disables dragging images/assets
+  // }
 }
 
